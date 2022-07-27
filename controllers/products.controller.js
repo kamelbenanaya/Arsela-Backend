@@ -1,9 +1,14 @@
-const Product = require("../models/product.model")
+const ProductModel = require("../models/product.model")
 
 
 module.exports = {
-  all: function (req, res) {
-    res.status(200).json({ products: [], count: 100 });
+  getAllProduct: async function (req, res) {
+    try {
+      const response = await ProductModel.find();
+      res.send(response);
+    } catch (err) {
+      res.send(err);
+    }
   },
   add: function (req, res) {
     const data = req.body;
