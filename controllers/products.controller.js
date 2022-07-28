@@ -10,21 +10,30 @@ module.exports = {
       res.send(err);
     }
   },
-  add: function (req, res) {
-    const data = req.body;
-    console.log("data", data);
 
+createProduct: function (req,res){
+  ProductModel.create(function(err, data) {
+    console.log(data)
+    if(err) {
+        console.log(error);
+    }
+    else {
+        res.send("Data inserted");
+    }
+});
+
+},
    
 
-    Product.create({name: req.body.name}).then(product => {           
-        res.status(201).json({ message: 'product created successfully',id:product._id })
-    })
-    .catch(err => {
-        res.status(500).json({ message: 'Internal Server Error' })
-    })
+    // Product.create({name: req.body.name}).then(product => {           
+    //     res.status(201).json({ message: 'product created successfully',id:product._id })
+    // })
+    // .catch(err => {
+    //     res.status(500).json({ message: 'Internal Server Error' })
+    // })
 
   
-  },
+  // },
   find: function (req, res) {
     const id = req.params?.id;
 

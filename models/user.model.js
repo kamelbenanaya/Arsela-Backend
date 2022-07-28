@@ -1,7 +1,7 @@
-const mangoose = require("mongoose");
-const schema = mangoose.schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-let userschema = new schema({
+const userschema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -20,22 +20,23 @@ let userschema = new schema({
   },
   phone: {
     type: Number,
-    max: 8,
+    
     required: true,
   },
   country: {
     type: String,
-    required: true,
+    required: false,
   },
 
   city: {
     type: String,
-    required: true,
+    required: false,
   },
   role: {
     type: String,
     enum: ["user", "admin"],
+    default : "user"
   },
-  image: { type: Schema.Types.ObjectId, ref: "Files" },
+  image: { type: Schema.Types.ObjectId, ref: "Files" }
 });
 module.exports = mongoose.model("User", userschema);
