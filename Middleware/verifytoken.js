@@ -23,7 +23,7 @@ isAdmin: function (req,res,next){
             res.status(500).send({message : err});
             return;
         }
-       if(user.role!=="admin") res.status(403).send({message : "require admin role !"});
+       if(user?.role!=="admin") res.status(403).send({message : "require admin role !"});
        else
        next() 
        
