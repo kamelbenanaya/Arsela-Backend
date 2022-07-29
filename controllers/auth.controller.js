@@ -16,7 +16,6 @@ module.exports = {
       message: "user created",
       user: userSaved,
     });
-    //  userModel.create(user)
   },
   signin: function (req, res) {
      userModel.findOne({
@@ -24,7 +23,7 @@ module.exports = {
       })
       .exec(async(err, user) => {
         if (err) {
-          return res.status(500).send({ message: err });
+          return res.status(500).send({ message: "internal server error" });
         }
         if (!user) {
           return res
@@ -33,14 +32,14 @@ module.exports = {
         }
         const passwordIsValid = bcrypt.compareSync(
           req.body.password,
-          user.password
+          user?.password
         );
         if (!passwordIsValid) {
           return res.status(401).send({ message: " password is invalid" });
         }
-        const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
-          expiresIn: 86400,
-        }
+        const expiresIn = 86400
+        const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY, {expiresIn}
+        
         );
 
         return res.status(200).send({
@@ -50,7 +49,7 @@ module.exports = {
                 lastName: user.lastName,
                 phone: user.phone
             },
-            token,
+            token,expiresIn
         })
       });
   },
