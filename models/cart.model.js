@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 let cartSchema = new Schema(
   {
-    Order:  { type: Schema.Types.ObjectId, ref: "Order" },
+    Order: { type: Schema.Types.ObjectId, ref: "Order" },
     Product:  { type: Schema.Types.ObjectId, ref: "Product" },
     price: {
         type: Number,
-        required: true,
+        default: 0,
     },
     quantity: {
         type: Number,
-        required: true,
+        default: 1,
       },
     total: {
         type: Number,

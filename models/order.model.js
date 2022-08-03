@@ -8,10 +8,10 @@ let OrderSchema = new Schema(
       required: true,
       default: 0,
     },
-    paid : {
-        type : Boolean,
-        default: false,
-        required: true
+    statut : {
+      type: String,
+      enum: ["Holding", "Paid","Rejected"],
+      default : "Holding"
     },
     user:  { type: Schema.Types.ObjectId, ref: "User" },
   },
