@@ -1,16 +1,23 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/user.model");
+const FilesModel = require("../models/files.model")
 
 module.exports = {
   signup: async function (req, res) {
+
+    const fileInfo = await FilesModel.create(req.file); 
+
+
     const user = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       phone: req.body.phone,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
+      image:fileInfo?._id
     };
+
     const userSaved = await userModel.create(user);
     res.status(200).send({
       message: "user created",

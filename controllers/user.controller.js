@@ -2,7 +2,7 @@ const userModel = require("../models/user.model");
 module.exports = {
   getAllUsers: async function (req, res) {
     try {
-      const response = await userModel.find();
+      const response = await userModel.find().populate("image");
       res.send(response);
     } catch (err) {
       res.send(err);

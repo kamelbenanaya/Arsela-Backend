@@ -9,17 +9,15 @@ module.exports = {
       const userId = req.userId; //ok
       const productList = req.body.products; //ok
 
-      console.log(userId, productList); //ok
 
       const my_order = await orderModel.create({ user: userId }); // ok
 
-      console.log(my_order); //ok
 
       let total_all_product = 0;
-      console.log("log1");
+
 
       productList.forEach(async function (one_product, index) {
-        console.log("log2");
+ 
 
         const my_product = await ProductModel.findById(one_product.id);
 
@@ -33,13 +31,9 @@ module.exports = {
           price: my_product.price,
         }); //ok
 
-        console.log("total_qte_product", total_qte_product, index);
         total_all_product += total_qte_product;
 
         if (productList.length - 1 === index) {
-          console.log("total_all_product", total_all_product);
-          console.log("log3");
-          console.log("log4");
 
           orderModel
             .findByIdAndUpdate(

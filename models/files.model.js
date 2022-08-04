@@ -3,21 +3,35 @@ const Schema = mongoose.Schema;
 
 let filesSchema = new Schema(
   {
-    src: {
-      type: String,
-      required: true,
+    fieldname: {
+      type: String
     },
-    name: {
-      type: String,
-      required: true,
+    originalname: {
+      type: String
+   
     },
-    type: {
-      type: String,
-      required: true,
+    encoding: {
+      type: String
+  
+    },
+    mimetype: {
+      type: String
+     
+    },
+    destination: {
+      type: String
+      
+    },
+    filename: {
+      type: String
+      
+    },
+    path: {
+      type: String
+
     },
     size: {
-      type: String,
-      required: true,
+      type: Number
     },
   },
   { timestamps: true }
