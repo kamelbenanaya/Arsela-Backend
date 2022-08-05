@@ -1,4 +1,6 @@
 const userModel = require("../models/user.model");
+const nodemailer = require("nodemailer");
+
 module.exports = {
   getAllUsers: async function (req, res) {
     try {
@@ -55,5 +57,5 @@ module.exports = {
     }) .catch (err => {
       res.status(500).send({ message : "error"})
     })
-  }
+  },
 };
