@@ -62,8 +62,11 @@ module.exports = {
       res.send(err);
     }
   },
-  getAllOrder: function (req, res, next) {
-    const responseorder = orderModel
+  getAllOrder: async function (req, res, next) {
+    const {limit=4,page=1}=req.query
+    const count =  await orderModel.countDocuments()
+    console.log(count)
+     await orderModel
       .aggregate([
         {
           $lookup: {
@@ -106,9 +109,13 @@ module.exports = {
         // {
         //   $unwind: "$categories",
         // },
-      ])
+      ]).limit(limit*1).skip((page-1)*limit)
       .exec(function (err, result) {
-        res.send(result);
+        res.send({data : result,
+          totalpages : Math.ceil(count/ limit),
+          currentPage : page,
+          totalData: count
+          });
       });
   },
 

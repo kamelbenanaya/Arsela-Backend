@@ -2,8 +2,16 @@ const categoryModel = require("../models/category.model");
 module.exports = {
   getAllCategory: async function (req, res) {
     try {
-      const response = await categoryModel.find();
-      res.send(response);
+      const {limit=4,page=1}=req.query
+
+      const response = await categoryModel.find().limit(limit*1).skip((page-1)*limit).exec();
+      const count = await categoryModel.countDocuments();
+
+      res.send({data : response,
+        totalpages : Math.ceil(count / limit),
+        currentPage : page,
+        totalData: count
+        });
     } catch (err) {
       res.send(err);
     }

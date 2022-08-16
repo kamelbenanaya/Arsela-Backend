@@ -4,8 +4,14 @@ const nodemailer = require("nodemailer");
 module.exports = {
   getAllUsers: async function (req, res) {
     try {
-      const response = await userModel.find().populate("image");
-      res.send(response);
+      const {limit=4,page=1}=req.query
+      const response = await userModel.find().populate("image").limit(limit*1).skip((page-1)*limit).exec();
+      const count = await userModel.countDocuments();
+      res.send({data : response,
+      totalpages : Math.ceil(count / limit),
+      currentPage : page,
+      totalData: count
+      });
     } catch (err) {
       res.send(err);
     }

@@ -3,8 +3,16 @@ const categoryModel = require("../models/category.model");
 module.exports = {
   getAllBrand: async function (req, res) {
     try {
-      const response = await brandModel.find();
-      res.status(200).send(response);
+      const {limit=4,page=1}=req.query
+
+      const response = await brandModel.find().limit(limit*1).skip((page-1)*limit).exec();
+      const count = await brandModel.countDocuments();
+
+      res.status(200).send({data : response,
+        totalpages : Math.ceil(count / limit),
+        currentPage : page,
+        totalData: count
+        });
     } catch (err) {
       res.status(400).send(err);
     }

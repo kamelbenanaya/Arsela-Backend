@@ -4,10 +4,17 @@ const FilesModel = require("../models/files.model")
 module.exports = {
   getAllProduct: async function (req, res) {
     try {
-      const response = await ProductModel.find().populate("brand category image");
-      res.send(response);
+      const {limit=4,page=1}=req.query
+      const response = await ProductModel.find().populate("brand category image").limit(limit*1).skip((page-1)*limit).exec();
+      const count = await ProductModel.countDocuments();
+
+      res.send({data : response,
+        totalpages : Math.ceil(count / limit),
+        currentPage : page,
+        totalData: count
+        });
     } catch (err) {
-      res.send(err);
+      res.send({message : err});
     }
   },
 
