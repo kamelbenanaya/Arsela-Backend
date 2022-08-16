@@ -8,7 +8,7 @@ const path = require('path')
 app.use ('/uploads',express.static(path.join(__dirname,'/uploads')))
 
 app.use(cors())
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 app.use(express.json({limit: '2mb', extended: true}))
 app.use(express.urlencoded({limit: '2mb', extended: true}))
