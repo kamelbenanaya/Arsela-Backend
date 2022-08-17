@@ -8,7 +8,7 @@ const validaterequest = Validator(true);
 
 router.get("/", category.getAllCategory);
 router.get("/:idCat",category.getCategory);
-router.post("/add",[validaterequest,verifytoken.verifytoken,verifytoken.isAdmin],category.createCategory);
+router.post("/addCat",[validaterequest,verifytoken.verifytoken,verifytoken.isAdmin],category.createCategory);
 router.put("/update/:idCat",[validaterequest,verifytoken.verifytoken,verifytoken.isAdmin],category.updateCategory);
 router.delete("/delete/:idCat",[verifytoken.verifytoken,verifytoken.isAdmin],category.deleteCategory);
 

@@ -35,28 +35,29 @@ module.exports = {
 
   createProduct: async function (req, res) {
     try {
-      console.log(req.files.file);
+      console.log(req?.files?.file);
 
-      const fileArray = req.files.images;
+      const fileArray = req?.files?.images;
 
       let arrayOfFilesIds = [];
-
+if(fileArray){
       for (let i = 0; i < fileArray.length; i++) {
         const fileInfo = await FilesModel.create(fileArray[i]);
 
         arrayOfFilesIds.push(fileInfo?._id);
       }
+    }
 
       let inputProduct = {
         ...req.body,
         image: arrayOfFilesIds,
       };
-
       const product = await ProductModel.create(inputProduct);
+      console.log("product",product)
 
       res.status(200).send({ message: "product created", product: product });
     } catch (err) {
-      res.status(400).send({message : "An error occured"});
+      res.status(400).send({message : "An error occured",err});
     }
   },
   getProduct: async function (req, res) {

@@ -39,12 +39,18 @@ const orderschema = Joi.object().keys({
     .min(1)
     .required(),
 });
-const createcateg = Joi.object().keys({
+const createCateg = Joi.object().keys({
   name: Joi.string().max(128).required(),
 });
-const createbrand = Joi.object().keys({
+const createBrand = Joi.object().keys({
   name: Joi.string().max(128).required(),
 });
+const createProduct = Joi.object().keys({
+  name: Joi.string().required(),
+  price: Joi.number().required(),
+  pricePromotion: Joi.number().required(),
+  description: Joi.string().required(),
+})
 module.exports = {
   "/signup": signupSchema,
   "/signin": loginschema,
@@ -52,6 +58,7 @@ module.exports = {
   "/password-reset/:userId/:token": resetsetpassword,
   "/password-reset/:userId/": resetsetpassword,
   "/createorder": orderschema,
-  "/add": createcateg,
-  "/add": createbrand,
+  "/addCat": createCateg,
+  "/addBrand": createBrand,
+  "/addPro": createProduct,
 };

@@ -9,7 +9,7 @@ const validaterequest = Validator(true);
 
 router.get("/",brand.getAllBrand);
 router.get("/:idBrand",brand.getBrand);
-router.post("/add",[validaterequest,verifytoken.verifytoken,verifytoken.isAdmin],brand.createBrand);
+router.post("/addBrand",[validaterequest,verifytoken.verifytoken,verifytoken.isAdmin],brand.createBrand);
 router.put("/update/:idBrand",[validaterequest,verifytoken.verifytoken,verifytoken.isAdmin],brand.updateBrand);
 router.delete("/delete/:idBrand",[verifytoken.verifytoken,verifytoken.isAdmin],brand.deleteBrand);
 

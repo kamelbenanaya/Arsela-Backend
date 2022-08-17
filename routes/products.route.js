@@ -7,12 +7,15 @@ const verify = require("../Middleware/verifySignUp");
 const products = require("../controllers/products.controller");
 
 const upload = require("../Middleware/uploadfile");
+const Validator = require("../Middleware/validator");
 
+const validaterequest = Validator(true);
 
 router.get("/", products.getAllProduct);
 router.post(
-  "/add",
+  "/addPro",
   [
+    validaterequest,
     verifytoken.verifytoken,
     verifytoken.isAdmin,
     upload.fields([{ name: "images" }]),
