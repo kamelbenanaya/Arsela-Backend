@@ -3,10 +3,18 @@ const categoryModel = require("../models/category.model");
 module.exports = {
   getAllBrand: async function (req, res) {
     try {
-      const response = await brandModel.find();
-      res.status(200).send(response);
+      const {limit=4,page=1}=req.query
+
+      const response = await brandModel.find().limit(limit*1).skip((page-1)*limit).exec();
+      const count = await brandModel.countDocuments();
+
+      res.status(200).send({data : response,
+        totalpages : Math.ceil(count / limit),
+        currentPage : page,
+        totalData: count
+        });
     } catch (err) {
-      res.status(400).send(err);
+      res.status(400).send({message : "An error occured"});
     }
   },
   getBrand: async function (req, res) {
@@ -15,7 +23,7 @@ module.exports = {
       const response = await brandModel.findById(_id);
       res.status(200).send(response);
     } catch (err) {
-      res.status(400).send(err);
+      res.status(400).send({message : "An error occured"});
     }
   },
   createBrand: async function (req, res) {
@@ -23,7 +31,7 @@ module.exports = {
       const brand = await brandModel.create(req.body);
       res.status(200).send({ message: "brand created", brand });
     } catch (err) {
-      res.status(400).send(err);
+      res.status(400).send({message : "An error occured"});
     }
   },
   updateBrand: function (req, res) {

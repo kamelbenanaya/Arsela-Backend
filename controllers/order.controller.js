@@ -15,13 +15,15 @@ module.exports = {
 
       let total_all_product = 0;
 
-
+    
       productList.forEach(async function (one_product, index) {
  
 
         const my_product = await ProductModel.findById(one_product.id);
-
-        const total_qte_product = one_product.qte * my_product.price;
+        if (!my_product){
+          res.send({message: "doesn't product with this ID"})
+        } else { 
+        const total_qte_product = await one_product.qte * my_product.price;
 
         const my_card = await cartModel.create({
           Order: my_order._id,
@@ -31,7 +33,7 @@ module.exports = {
           price: my_product.price,
         }); //ok
 
-        total_all_product += total_qte_product;
+        total_all_product += await  total_qte_product;
 
         if (productList.length - 1 === index) {
 
@@ -54,14 +56,16 @@ module.exports = {
             .catch((err) => {
               res.status(500).send({ message: "error" });
             });
-        }
+        }}
       });
     } catch (err) {
-      res.send(err);
+      res.send({message : "An error occured"});
     }
   },
-  getAllOrder: function (req, res, next) {
-    const responseorder = orderModel
+  getAllOrder: async function (req, res, next) {
+    const {limit=4,page=1}=req.query
+    const count =  await orderModel.countDocuments()
+     await orderModel
       .aggregate([
         {
           $lookup: {
@@ -104,9 +108,13 @@ module.exports = {
         // {
         //   $unwind: "$categories",
         // },
-      ])
+      ]).limit(limit*1).skip((page-1)*limit)
       .exec(function (err, result) {
-        res.send(result);
+        res.send({data : result,
+          totalpages : Math.ceil(count/ limit),
+          currentPage : page,
+          totalData: count
+          });
       });
   },
 
