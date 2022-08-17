@@ -1,5 +1,4 @@
 const Joi = require("joi");
-const cartModel = require("../models/cart.model")
 
 const signupSchema = Joi.object().keys({
   firstName: Joi.string().max(128).required(),
@@ -16,7 +15,7 @@ const signupSchema = Joi.object().keys({
 });
 const loginschema = Joi.object().keys({
   email: Joi.string().email().required(),
-  password: Joi.string().required()
+  password: Joi.string().required(),
 });
 const forgetschema = Joi.object().keys({
   email: Joi.string().email().required(),
@@ -30,19 +29,29 @@ const resetsetpassword = Joi.object().keys({
     .required(),
 });
 const orderschema = Joi.object().keys({
-  products : Joi.array().items({
-    id : Joi.string().regex(/^[a-fA-F0-9]{24}$/).required(),
-    qte : Joi.number().integer().required()
-  }
-  ).min(1).required()
-})
-
+  products: Joi.array()
+    .items({
+      id: Joi.string()
+        .regex(/^[a-fA-F0-9]{24}$/)
+        .required(),
+      qte: Joi.number().integer().required(),
+    })
+    .min(1)
+    .required(),
+});
+const createcateg = Joi.object().keys({
+  name: Joi.string().max(128).required(),
+});
+const createbrand = Joi.object().keys({
+  name: Joi.string().max(128).required(),
+});
 module.exports = {
   "/signup": signupSchema,
   "/signin": loginschema,
-  "/forget" : forgetschema,
-  "/password-reset/:userId/:token" : resetsetpassword,
-  "/password-reset/:userId/" : resetsetpassword,
-  "/createorder" : orderschema,
-
+  "/forget": forgetschema,
+  "/password-reset/:userId/:token": resetsetpassword,
+  "/password-reset/:userId/": resetsetpassword,
+  "/createorder": orderschema,
+  "/add": createcateg,
+  "/add": createbrand,
 };

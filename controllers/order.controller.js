@@ -59,13 +59,12 @@ module.exports = {
         }}
       });
     } catch (err) {
-      res.send(err);
+      res.send({message : "An error occured"});
     }
   },
   getAllOrder: async function (req, res, next) {
     const {limit=4,page=1}=req.query
     const count =  await orderModel.countDocuments()
-    console.log(count)
      await orderModel
       .aggregate([
         {
