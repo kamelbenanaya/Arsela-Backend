@@ -15,7 +15,7 @@ router.get("/", products.getAllProduct);
 router.post(
   "/addPro",
   [
-    validaterequest,
+    // validaterequest,
     verifytoken.verifytoken,
     verifytoken.isAdmin,
     upload.fields([{ name: "images" }]),
@@ -30,7 +30,11 @@ router.delete(
 );
 router.put(
   "/update/:idProd",
-  [verifytoken.verifytoken, verifytoken.isAdmin],
+  [
+    verifytoken.verifytoken,
+    verifytoken.isAdmin,
+    upload.fields([{ name: "images" }]),
+  ],
   products.updateProduct
 );
 router.post("/upload", upload.single("file"), products.uploadfile);

@@ -48,7 +48,7 @@ const createBrand = Joi.object().keys({
 const createProduct = Joi.object().keys({
   name: Joi.string().required(),
   price: Joi.number().required(),
-  pricePromotion: Joi.number().required(),
+  pricePromotion: Joi.number(),
   description: Joi.string().required(),
 })
 module.exports = {

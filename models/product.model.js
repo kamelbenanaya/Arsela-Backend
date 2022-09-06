@@ -11,17 +11,25 @@ let ProductSchema = new Schema(
       type: Number,
       required: true,
     },
+    // pricePromotion: {
+    //   type: Number,
+    //   required: true,
+    // },
     pricePromotion: {
-      type: Number,
-      required: true,
+      promotion: {
+        type: Number,
+      },
+      priceAfterPromo: {
+        type: Number,
+      },
     },
     description: {
       type: String,
       required: true,
     },
-    image:  [{ type: Schema.Types.ObjectId, ref: "Files" }],
+    image: [{ type: Schema.Types.ObjectId, ref: "Files" }],
     brand: { type: Schema.Types.ObjectId, ref: "Brand" },
-    category: { type: Schema.Types.ObjectId, ref: "Category" },
+    category: [{ type: Schema.Types.ObjectId, ref: "Category" }],
   },
   { timestamps: true }
 );

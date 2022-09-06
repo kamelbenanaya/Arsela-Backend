@@ -2,7 +2,7 @@ const categoryModel = require("../models/category.model");
 module.exports = {
   getAllCategory: async function (req, res) {
     try {
-      const { limit = 4, page = 1 } = req.query;
+      const { limit = 10, page = 1 } = req.query;
 
       const response = await categoryModel
         .find()
@@ -18,7 +18,7 @@ module.exports = {
         totalData: count,
       });
     } catch (err) {
-      res.send({message : "An error occured"});
+      res.send({ message: "An error occured" });
     }
   },
   getCategory: async function (req, res) {
@@ -27,7 +27,7 @@ module.exports = {
       const response = await categoryModel.findById(_id);
       res.status(200).send(response);
     } catch (err) {
-      res.status(400).send({message : "An error occured"});
+      res.status(400).send({ message: "An error occured" });
     }
   },
   createCategory: async function (req, res) {
@@ -35,7 +35,7 @@ module.exports = {
       const category = await categoryModel.create(req.body);
       res.status(200).send({ message: "category created", category });
     } catch (err) {
-      res.status(400).send({message : "An error occured"});
+      res.status(400).send({ message: "An error occured" });
     }
   },
   updateCategory: function (req, res) {
