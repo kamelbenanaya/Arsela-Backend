@@ -23,7 +23,6 @@ mongoose
 
 var indexRouter = require("./routes");
 app.use("/api/v1", indexRouter);
-
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
